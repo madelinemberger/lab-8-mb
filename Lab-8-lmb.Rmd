@@ -7,5 +7,58 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+salmon_simple <- read_csv("salmon_simple_mb.csv")
+
+salmon_simple
+
+```
+
+
+1. Explore the Data 
+
+```{r}
+salmon_scatter <- ggplot(salmon_simple, aes(x = year, y = imports_fresh))+
+  geom_point()
+
+salmon_scatter
+
+#Overall, the data looks linear. Towards the end of the series there is some variation that is somewhat concerning, but for all intensive purposes it appears linear
+```
+
+
+2. Perform a linear regression
+
+```{r}
+
+salmon_model <- lm(imports_fresh ~ year, data = salmon_simple)
+salmon_model
+summary(salmon_model)
+
+#equation: imports(tons) = -1498000 + 7550(Year)
+#The slope means that salmon imports increase 7550 tons per year in our model. The Y intercept shows what the imports would be if we used this model to trace all th way back to year zero. It is concerning because that is extrapolating present day data to a time when this data did not exist to build a model. 
+
+
+```
+
+
+3. Model Diagnostics 
+```{r}
+plot(salmon_model)
+
+#based on the qq plot, these residuals do appear normally distributed, there are 2 or three outliers. the residuals vs fitted graph suggests a vague pattern over time, but not enough to be conerning. 
+
+#to view all four diagnostic plots at once and see them in the knitted document: 
+par(mfrow = c(2,2))
+plot(model_name)
+
+```
+
+5. Explore model fit and significance
+
+```{r}
+
 ```
 
