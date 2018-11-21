@@ -52,13 +52,32 @@ plot(salmon_model)
 
 #to view all four diagnostic plots at once and see them in the knitted document: 
 par(mfrow = c(2,2))
-plot(model_name)
+plot(salmon_model)
 
 ```
 
 5. Explore model fit and significance
 
 ```{r}
+#Does year significantly predict salmon imports? Yes, the p-value for the model fit is small
+#What does the R 2 value mean? 95% of the variance in imports can be attributed to year
+#Proportion not explained by year: 5%
+
+```
+
+
+6. Prepare a final graph 
+```{r}
+
+salmon_final_graph <- ggplot(salmon_simple, aes(x = year, y = imports_fresh)) +
+  geom_point()+
+  geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+  theme_bw() +
+  scale_x_continuous(expand = c(0,0), limits = c(1990, 2017)) +
+  labs(x = "Year", y = "U.S. Annual Fresh Salmon Imports \n(1,000 pounds)")
+
+salmon_final_graph
+
 
 ```
 
